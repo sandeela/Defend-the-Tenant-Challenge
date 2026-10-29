@@ -1,0 +1,47 @@
+For an organization with 100 users, two IT administrators, and the Microsoft 365 E7 licenses specified in the scenario, I recommend the following five controls, ranked by risk reduction and operational practicality. I would first verify service entitlements and assess existing configurations, retaining effective protections and correcting gaps.
+
+1. Protect identities with Microsoft Entra Conditional Access and phishing-resistant MFA
+
+Why it matters and risk mitigated: Compromised identities can expose email, files, applications, and administrative functions. Require MFA for all users across all resources, prioritize phishing-resistant authentication such as FIDO2 security keys or Windows Hello for Business, and block legacy authentication. Configure separate policies requiring MFA for medium/high sign-in risk and MFA plus secure password change for high user risk.
+
+Rollout with limited resources: Start with the two administrators and a representative pilot group. Confirm authentication registration, test recovery procedures and emergency access accounts, and review Conditional Access impact before tenant-wide enforcement. Use Microsoft policy templates and enable self-service password reset with appropriate recovery methods. Document exceptions with owners and expiry dates.
+
+Drawbacks and trade-offs: Registration and recovery generate support requests, security keys may introduce costs, and legacy applications may require replacement. Phishing-resistant MFA reduces phishing risk but does not prevent every session-theft attack.
+
+2. Secure devices with Microsoft Intune and Microsoft Defender for Endpoint
+
+Why it matters and risk mitigated: Unmanaged or vulnerable devices can enable ransomware, data theft, and lateral movement. Combine endpoint detection and response with centrally managed updates, encryption, antivirus, firewall, and attack surface reduction policies.
+
+Rollout with limited resources: Inventory devices, enrol supported endpoints in Intune, and deploy Defender onboarding centrally. Pilot attack surface reduction rules in audit mode, resolve compatibility issues, and enforce validated rules through deployment rings. Establish device compliance before introducing compliant-device access requirements. Enable supported automated remediation, review Action Center, and maintain an incident escalation process.
+
+Drawbacks and trade-offs: Updates and security rules can disrupt business applications. Use narrowly scoped, reviewed exceptions. Automation reduces repetitive investigation work but does not replace administrator oversight or tested recovery procedures.
+
+3. Protect email with Microsoft Defender for Office 365
+
+Why it matters and risk mitigated: Phishing, malicious attachments, and impersonation can cause account compromise and fraudulent payments. Microsoft’s preset security policies provide a maintainable foundation for email protection.
+
+Rollout with limited resources: Pilot the Standard preset security policy, then apply it broadly. Consider Strict protection for finance and administrators after testing. Configure relevant impersonation protection, verify Zero-hour Auto Purge settings, and provide a simple user reporting process. Assign primary and backup responsibility for incident and quarantine review. Where available and appropriately licensed, pilot the Microsoft Security Copilot Phishing Triage Agent for supported user-reported phishing submissions, measuring its accuracy and time saved.
+
+Drawbacks and trade-offs: Legitimate messages may be quarantined, requiring a clear release process. AI-assisted triage can misclassify submissions and consumes capacity; administrators must review escalations and monitor outcomes. Independent verification of payment changes remains essential.
+
+4. Reduce standing privileges and restrict application consent
+
+Why it matters and risk mitigated: Compromised privileged accounts can affect the entire tenant. Separate everyday and administration accounts, apply least privilege, and use Microsoft Entra Privileged Identity Management for time-limited role activation. Disable ordinary-user application self-consent and review existing permission grants.
+
+Rollout with limited resources: Map routine tasks to appropriate administrative roles. Make routine privileged role assignments eligible, with activation justification, MFA, and time limits. Maintain separately secured and monitored emergency access accounts. Establish a lightweight application approval process with primary and backup reviewers.
+
+Drawbacks and trade-offs: Elevation and application approvals add administrative steps. With only two administrators, approval arrangements must accommodate absence and emergencies. Restricting new consent does not revoke existing grants, and PIM does not prevent misuse during an active privileged session.
+
+5. Protect sensitive data with Microsoft Purview DLP and Security Copilot-assisted triage
+
+Why it matters and risk mitigated: Legitimate or compromised accounts can expose sensitive information through inappropriate sharing. Targeted sensitivity labels and DLP policies reduce accidental disclosure and help administrators identify risky activity.
+
+Rollout with limited resources: Work with a business owner to identify an initial high-value data category, such as customer personal information. Pilot narrowly scoped DLP policies in simulation mode, review matches and user feedback, then enforce validated rules. After enforcement, pilot Microsoft Purview’s DLP Triage Agent, powered by Security Copilot, to prioritize supported alerts and explain why they need attention. Confirm permissions and provisioned Security Compute Units before deployment. Measure review time saved and prioritization accuracy.
+
+Drawbacks and trade-offs: DLP can interrupt legitimate sharing, so provide a documented exception process. The triage agent does not evaluate simulation-policy alerts or every alert type, can prioritize incorrectly, and consumes capacity. Administrators remain responsible for response decisions and manual review of unsupported alerts.
+
+Implementation and measurement
+
+I would deploy these controls in stages, with one administrator owning each change and the other providing review and backup coverage. Track MFA coverage, endpoint onboarding and patch status, unresolved incidents, privileged assignments, DLP exceptions, and agent capacity consumption. Expand automation only where measured benefits justify its operational cost.
+
+My Phase 1 assessment reported all 10 controls implemented. These Phase 2 recommendations build on that foundation and describe proposed customer improvements, rather than claiming additional controls or agents were tested in the lab.
